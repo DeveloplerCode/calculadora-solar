@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Solar Pro | Eficiencia Energética</title>
+    <meta name="description" content="Calcula el dimensionamiento de tu sistema solar fotovoltaico con precisión quirúrgica. Paneles, baterías e inversores.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/presentation/styles/main.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ Calculadora Solar Pro</h1>
+            <p class="subtitle">Dimensionamiento preciso para sistemas off-grid y residenciales</p>
+        </header>
+
+        <main>
+            <!-- Step 1: Configuración Base -->
+            <section class="card animate-fade">
+                <h2>1. Configuración del Sistema</h2>
+                <div class="grid" style="margin-top: 1.5rem;">
+                    <div class="input-group">
+                        <label>Tecnología de Batería</label>
+                        <select id="batteryType">
+                            <option value="Litio">Litio (LFP) - 80% DoD</option>
+                            <option value="GEL">GEL / AGM - 50% DoD</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Factor de Seguridad</label>
+                        <input type="number" id="safetyFactor" value="25" placeholder="%">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2: Ubicación y HSP -->
+            <section class="card animate-fade" style="animation-delay: 0.1s;">
+                <h2>2. Radiación Solar (HSP)</h2>
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">Obtén las Horas Solares Pico para tu ubicación.</p>
+                <div class="grid">
+                    <div class="input-group">
+                        <label>Latitud</label>
+                        <input type="number" id="latitude" value="3.45" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label>Longitud</label>
+                        <input type="number" id="longitude" value="-76.53" step="0.01">
+                    </div>
+                </div>
+                <button type="button" id="btnGetLocation" class="secondary">
+                    <i class="fas fa-map-marker-alt"></i> Detectar Ubicación (GPS)
+                </button>
+                <div id="hspInfo" style="margin-top: 1rem; text-align: center; font-weight: 600;"></div>
+            </section>
+
+            <!-- Step 3: Aparatos -->
+            <section class="card animate-fade" style="animation-delay: 0.2s;">
+                <h2>3. Cargas Eléctricas</h2>
+                <form id="applianceForm">
+                    <div class="grid" style="grid-template-columns: 2fr 1fr 1fr 1fr;">
+                        <input type="text" id="appName" placeholder="Ej: Nevera" required>
+                        <input type="number" id="appPower" placeholder="Watts" required>
+                        <input type="number" id="appHours" placeholder="Horas" required>
+                        <input type="number" id="appQty" value="1" placeholder="Cant." required>
+                    </div>
+                    <div style="margin-top: 1rem; display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" id="appPeak" style="width: auto;">
+                        <label for="appPeak" style="margin-bottom: 0;">¿Tiene picos de arranque?</label>
+                    </div>
+                    <button type="submit" style="margin-top: 1rem;">
+                        <i class="fas fa-plus"></i> Añadir Aparato
+                    </button>
+                </form>
+
+                <div id="applianceList" style="margin-top: 1.5rem;">
+                    <!-- List items will be injected here -->
+                </div>
+            </section>
+
+            <!-- Step 4: Panel Solar -->
+            <section class="card animate-fade" style="animation-delay: 0.3s;">
+                <h2>4. Panel Solar Comercial</h2>
+                <div class="grid" style="margin-top: 1.5rem;">
+                    <div class="input-group">
+                        <label>Potencia del Panel (Wp)</label>
+                        <input type="number" id="panelPower" value="550">
+                    </div>
+                    <div class="input-group">
+                        <label>Capacidad Batería Unit. (Ah)</label>
+                        <input type="number" id="batteryUnitAh" value="100">
+                    </div>
+                </div>
+                <button id="btnCalculate" style="background: var(--accent); color: white;">
+                    <i class="fas fa-calculator"></i> REALIZAR CÁLCULO
+                </button>
+            </section>
+
+            <!-- Results Section -->
+            <div id="results" class="animate-fade" style="display: none; animation-delay: 0.4s;">
+                <section class="card" style="border: 2px solid var(--accent); padding: 2.5rem;">
+                    <h2 style="color: var(--accent); margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+                        ✅ Dimensionamiento Sugerido
+                    </h2>
+                    
+                    <div class="grid" style="gap: 2rem;">
+                        <div>
+                            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-base);">
+                                <i class="fas fa-bolt" style="color: #ffca28;"></i> Consumo
+                            </h3>
+                            <div class="result-row"><span>Carga Diaria:</span> <span class="result-value" id="resSubWh">0 Wh</span></div>
+                            <div class="result-row"><span>Total (Seguridad):</span> <span class="result-value" id="resTotalWh">0 Wh</span></div>
+                        </div>
+                        <div>
+                            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-base);">
+                                <i class="fas fa-solar-panel" style="color: #4fc3f7;"></i> Campo Solar
+                            </h3>
+                            <div class="result-row"><span>Potencia Requerida:</span> <span class="result-value" id="resReqWp">0 Wp</span></div>
+                            <div class="result-row"><span>Cantidad Paneles:</span> <span class="result-value" id="resNumPanels">0</span></div>
+                        </div>
+                        <div>
+                            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-base);">
+                                <i class="fas fa-car-battery" style="color: #ef5350;"></i> Almacenamiento
+                            </h3>
+                            <div class="result-row"><span>Tensión Sistema:</span> <span class="result-value" id="resVoltage">0 V</span></div>
+                            <div class="result-row"><span>Distribución:</span> <span class="result-value" id="resBatConfig">0 Series x 0 Paralelos</span></div>
+                            <div class="result-row"><span>Total Baterías:</span> <span class="result-value" id="resNumBat">0</span></div>
+                        </div>
+                        <div>
+                            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-base);">
+                                <i class="fas fa-plug" style="color: #66bb6a;"></i> Inversor / MPPT
+                            </h3>
+                            <div class="result-row"><span>Inversor Sugerido:</span> <span class="result-value" id="resInvPower">0 W</span></div>
+                            <div class="result-row"><span>Controlador MPPT:</span> <span class="result-value" id="resMPPT">0 A</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Voltage Guide Section (From Excel 3) -->
+                    <div id="voltageGuide" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px dashed rgba(255,255,255,0.2);">
+                        <h4 style="margin-bottom: 1rem;"><i class="fas fa-info-circle"></i> Referencia de Voltaje (SOC)</h4>
+                        <div id="socTableContainer" class="grid" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px;">
+                            <!-- SOC items will be injected here -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+ 
+        <footer style="text-align: center; padding: 2rem; color: var(--text-muted);">
+            <p>&copy; 2026 Solar Pro Calculator. amezadeveloper@gmail.com</p>
+        </footer>
+    </div>
+
+    <!-- Floating Battery Indicator -->
+    <div id="batteryIndicator" class="battery-badge">LITIO</div>
+
+    <!-- Script Entry Point -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
