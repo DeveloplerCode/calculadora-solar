@@ -44,23 +44,33 @@
                 <div class="grid">
                     <div class="input-group">
                         <label>Latitud</label>
-                        <input type="number" id="latitude" value="3.45" step="0.01">
+                        <input type="number" id="latitude" value="0" step="0.01">
                     </div>
                     <div class="input-group">
                         <label>Longitud</label>
-                        <input type="number" id="longitude" value="-76.53" step="0.01">
+                        <input type="number" id="longitude" value="0" step="0.01">
                     </div>
                 </div>
                 <button type="button" id="btnGetLocation" class="secondary">
                     <i class="fas fa-map-marker-alt"></i> Detectar Ubicación (GPS)
                 </button>
+                <div class="gps-tip">
+                    <div class="gps-tip-icon">
+                        <i class="fas fa-location-arrow"></i>
+                    </div>
+                    <div class="gps-tip-text">
+                        <span class="gps-tip-title">Requerido: Permiso de ubicación</span>
+                        El navegador solicitará acceso a tu posición. <strong>Acéptalo</strong> para autocompletar 
+                        las coordenadas y calcular el HSP preciso de tu zona.
+                    </div>
+                </div>
                 <div id="hspInfo" style="margin-top: 1rem; text-align: center; font-weight: 600;"></div>
             </section>
 
             <!-- Step 3: Aparatos -->
             <section class="card animate-fade" style="animation-delay: 0.2s;">
                 <h2>3. Cargas Eléctricas</h2>
-                <form id="applianceForm">
+                <form id="applianceForm" autocomplete="off">
                     <div class="grid" style="grid-template-columns: 2fr 1fr 1fr 1fr;">
                         <input type="text" id="appName" placeholder="Ej: Nevera" required>
                         <input type="number" id="appPower" placeholder="Watts" required>
@@ -84,17 +94,30 @@
             <!-- Step 4: Panel Solar -->
             <section class="card animate-fade" style="animation-delay: 0.3s;">
                 <h2>4. Panel Solar Comercial</h2>
-                <div class="grid" style="margin-top: 1.5rem;">
-                    <div class="input-group">
-                        <label>Potencia del Panel (Wp)</label>
-                        <input type="number" id="panelPower" value="550">
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                    <i class="fas fa-info-circle"></i> Ingresa los datos de la hoja de especificaciones (datasheet) del panel.
+                </p>
+                <div class="grid" style="margin-top: 0; grid-template-columns: repeat(4, 1fr); align-items: end;">
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label>Potencia Pico<span class="label-unit">(Wp)</span></label>
+                        <input type="number" id="panelPower" value="550" min="1">
                     </div>
-                    <div class="input-group">
-                        <label>Capacidad Batería Unit. (Ah)</label>
-                        <input type="number" id="batteryUnitAh" value="100">
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label>Voc<span class="label-unit">(V) — Cto. Abierto</span></label>
+                        <input type="number" id="panelVoc" value="49.8" step="0.1" min="0.1"
+                               title="Voltaje de Circuito Abierto. Aparece en el datasheet del panel.">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label>Isc<span class="label-unit">(A) — Cto. Corto</span></label>
+                        <input type="number" id="panelIsc" value="13.98" step="0.01" min="0.01"
+                               title="Corriente de Cortocircuito. Aparece en el datasheet del panel.">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label>Batería Unit.<span class="label-unit">(Ah)</span></label>
+                        <input type="number" id="batteryUnitAh" value="100" min="1">
                     </div>
                 </div>
-                <button id="btnCalculate" style="background: var(--accent); color: white;">
+                <button id="btnCalculate" style="background: var(--accent); color: white; margin-top: 1.5rem;">
                     <i class="fas fa-calculator"></i> REALIZAR CÁLCULO
                 </button>
             </section>
@@ -120,6 +143,7 @@
                             </h3>
                             <div class="result-row"><span>Potencia Requerida:</span> <span class="result-value" id="resReqWp">0 Wp</span></div>
                             <div class="result-row"><span>Cantidad Paneles:</span> <span class="result-value" id="resNumPanels">0</span></div>
+                            <div class="result-row" id="rowPanelStrings"><span>Config. Strings:</span> <span class="result-value" id="resPanelStrings">—</span></div>
                         </div>
                         <div>
                             <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-base);">
@@ -135,6 +159,7 @@
                             </h3>
                             <div class="result-row"><span>Inversor Sugerido:</span> <span class="result-value" id="resInvPower">0 W</span></div>
                             <div class="result-row"><span>Controlador MPPT:</span> <span class="result-value" id="resMPPT">0 A</span></div>
+                            <div class="result-row" id="rowMPPTVoltage"><span>Voltaje Máx. Entrada:</span> <span class="result-value" id="resMPPTVoltage">—</span></div>
                         </div>
                     </div>
 

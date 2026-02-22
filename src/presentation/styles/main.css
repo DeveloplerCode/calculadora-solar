@@ -76,8 +76,96 @@ h1 {
 label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Unidad / descripción pequeña dentro del label */
+label .label-unit {
+  font-weight: 400;
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-left: 4px;
+  white-space: nowrap;
+}
+
+/* Grid de 4 columnas para el panel solar — colapsa a 2 en móvil */
+@media (max-width: 640px) {
+  .grid-panel-solar {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Aviso informativo GPS - Más estético y con mejor espaciado */
+.gps-tip {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 2rem; /* Más espacio con el botón */
+  padding: 1.2rem 1.5rem;
+  background: rgba(59, 130, 246, 0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-left: 4px solid var(--secondary);
+  border-radius: 16px;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  line-height: 1.6;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.gps-tip:hover {
+  background: rgba(59, 130, 246, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.1);
+}
+
+.gps-tip-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: var(--secondary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+  animation: pulse-soft 2s infinite;
+}
+
+@keyframes pulse-soft {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.gps-tip-text {
+  flex: 1;
+}
+
+.gps-tip-title {
+  display: block;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #60a5fa;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.gps-tip strong {
+  color: #fff;
+  font-weight: 700;
+  background: rgba(59, 130, 246, 0.3);
+  padding: 0 4px;
+  border-radius: 4px;
 }
 
 input, select {
