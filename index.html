@@ -26,10 +26,42 @@
                     <div class="input-group">
                         <label>Tecnología de Batería</label>
                         <select id="batteryType">
+                            <option value="" disabled selected>Seleccione Tecnología...</option>
                             <option value="Litio">Litio (LFP) - 80% DoD</option>
                             <option value="GEL">GEL / AGM - 50% DoD</option>
                         </select>
                     </div>
+                </div>
+
+                <!-- Opciones dinámicas para GEL -->
+                <div id="gelOptions" class="battery-options-container" style="display: none;">
+                    <label class="options-label">Batería de gel 12V - Seleccione Capacidad</label>
+                    <div class="options-grid">
+                        <div class="option-item" data-value="100" data-voltage="12">100Ah</div>
+                        <div class="option-item" data-value="150" data-voltage="12">150Ah</div>
+                        <div class="option-item" data-value="200" data-voltage="12">200Ah</div>
+                        <div class="option-item" data-value="250" data-voltage="12">250Ah</div>
+                    </div>
+                </div>
+
+                <!-- Opciones dinámicas para LITIO -->
+                <div id="litioOptions" class="battery-options-container" style="display: none;">
+                    <label class="options-label">Litio - Seleccione Voltaje</label>
+                    <div class="options-grid voltage-grid">
+                        <div class="option-item voltage-item" data-voltage="12">12V</div>
+                        <div class="option-item voltage-item" data-voltage="24">24V</div>
+                        <div class="option-item voltage-item" data-voltage="48">48V</div>
+                    </div>
+                    
+                    <div id="litioCapacities" style="margin-top: 1rem; display: none;">
+                        <label class="options-label">Seleccione Capacidad</label>
+                        <div id="litioCapGrid" class="options-grid">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid" style="margin-top: 1.5rem;">
                     <div class="input-group">
                         <label>Factor de Seguridad</label>
                         <input type="number" id="safetyFactor" value="25" placeholder="%">
@@ -71,11 +103,23 @@
             <section class="card animate-fade" style="animation-delay: 0.2s;">
                 <h2>3. Cargas Eléctricas</h2>
                 <form id="applianceForm" autocomplete="off">
-                    <div class="grid" style="grid-template-columns: 2fr 1fr 1fr 1fr;">
-                        <input type="text" id="appName" placeholder="Ej: Nevera" required>
-                        <input type="number" id="appPower" placeholder="Watts" required>
-                        <input type="number" id="appHours" placeholder="Horas" required>
-                        <input type="number" id="appQty" value="1" placeholder="Cant." required>
+                    <div class="grid-appliances">
+                        <div class="input-group">
+                            <label>Aparato</label>
+                            <input type="text" id="appName" placeholder="Ej: Nevera" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Potencia <span class="label-unit">(W)</span></label>
+                            <input type="number" id="appPower" placeholder="Watts" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Horas <span class="label-unit">(h/día)</span></label>
+                            <input type="number" id="appHours" placeholder="Horas" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Cant.</label>
+                            <input type="number" id="appQty" value="1" placeholder="Cant." required>
+                        </div>
                     </div>
                     <div style="margin-top: 1rem; display: flex; align-items: center; gap: 10px;">
                         <input type="checkbox" id="appPeak" style="width: auto;">
@@ -97,7 +141,7 @@
                 <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
                     <i class="fas fa-info-circle"></i> Ingresa los datos de la hoja de especificaciones (datasheet) del panel.
                 </p>
-                <div class="grid" style="margin-top: 0; grid-template-columns: repeat(4, 1fr); align-items: end;">
+                <div class="grid-solar">
                     <div class="input-group" style="margin-bottom: 0;">
                         <label>Potencia Pico<span class="label-unit">(Wp)</span></label>
                         <input type="number" id="panelPower" value="550" min="1">
@@ -112,7 +156,7 @@
                         <input type="number" id="panelIsc" value="13.98" step="0.01" min="0.01"
                                title="Corriente de Cortocircuito. Aparece en el datasheet del panel.">
                     </div>
-                    <div class="input-group" style="margin-bottom: 0;">
+                    <div class="input-group" style="margin-bottom: 0; display: none;">
                         <label>Batería Unit.<span class="label-unit">(Ah)</span></label>
                         <input type="number" id="batteryUnitAh" value="100" min="1">
                     </div>

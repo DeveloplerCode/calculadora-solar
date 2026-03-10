@@ -38,6 +38,7 @@ h1 {
   margin-bottom: 0.5rem;
   background: linear-gradient(to right, #fbbf24, #f59e0b);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -93,10 +94,33 @@ label .label-unit {
 }
 
 /* Grid de 4 columnas para el panel solar — colapsa a 2 en móvil */
+.grid-appliances, .grid-solar {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.grid-solar {
+  grid-template-columns: repeat(4, 1fr);
+  align-items: flex-end;
+}
+
 @media (max-width: 640px) {
-  .grid-panel-solar {
-    grid-template-columns: repeat(2, 1fr) !important;
+  .grid-appliances, .grid-solar {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
   }
+}
+
+@media (max-width: 480px) {
+  .grid-appliances, .grid-solar {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-appliances .input-group, .grid-solar .input-group {
+  margin-bottom: 0;
 }
 
 /* Aviso informativo GPS - Más estético y con mejor espaciado */
@@ -304,4 +328,62 @@ button.secondary {
 
 .animate-fade {
   animation: fadeIn 0.5s ease forwards;
+}
+
+/* Dynamic Battery Options */
+.battery-options-container {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.4s ease;
+}
+
+.options-label {
+  font-size: 0.9rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.options-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.option-item {
+  flex: 1;
+  min-width: 100px;
+  padding: 0.8rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.option-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--primary);
+}
+
+.option-item.selected {
+  background: var(--primary);
+  color: #0f172a;
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+}
+
+.voltage-item.selected {
+  background: var(--secondary);
+  color: white;
+  border-color: var(--secondary);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
 }
