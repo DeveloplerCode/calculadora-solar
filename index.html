@@ -132,10 +132,10 @@
                     </div>
                     <div class="input-group" style="margin-bottom: 0;">
                         <label>Estándar de Tensión (Auto)</label>
-                        <div class="voltage-selection-display" style="display: flex; gap: 5px;">
-                            <div class="voltage-badge" id="v12_auto" style="padding: 0.5rem; font-size: 0.8rem;">12V</div>
-                            <div class="voltage-badge" id="v24_auto" style="padding: 0.5rem; font-size: 0.8rem;">24V</div>
-                            <div class="voltage-badge" id="v48_auto" style="padding: 0.5rem; font-size: 0.8rem;">48V</div>
+                        <div class="voltage-selection-display">
+                            <div class="voltage-badge" id="v12_auto">12V</div>
+                            <div class="voltage-badge" id="v24_auto">24V</div>
+                            <div class="voltage-badge" id="v48_auto">48V</div>
                         </div>
                     </div>
                 </div>
@@ -172,11 +172,12 @@
                 </div>
             </section>
 
-            <div style="text-align: center; margin: 3rem 0;">
-                <button id="btnCalculate" style="background: var(--accent); color: white; width: auto; min-width: 300px; font-size: 1.2rem; padding: 1.2rem 3rem;">
+            <!-- Final Action Card -->
+            <section class="card animate-fade" style="animation-delay: 0.45s; padding: 1.5rem; border: 1px solid var(--accent);">
+                <button id="btnCalculate" style="width: 100%; font-size: 1.2rem; padding: 1.2rem; background: var(--accent); color: white;">
                     <i class="fas fa-calculator"></i> REALIZAR CÁLCULO DEL SISTEMA
                 </button>
-            </div>
+            </section>
 
             <!-- Step 6: Results Section -->
             <div id="results" class="animate-fade" style="display: none; animation-delay: 0.5s;">
