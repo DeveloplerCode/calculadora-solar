@@ -387,3 +387,24 @@ button.secondary {
   border-color: var(--secondary);
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
 }
+.voltage-badge {
+  flex: 1;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+  opacity: 0.5;
+}
+
+.voltage-badge.active {
+  background: var(--accent);
+  color: #0f172a;
+  border-color: var(--accent);
+  opacity: 1;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+  transform: scale(1.05);
+}

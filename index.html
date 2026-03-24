@@ -33,33 +33,7 @@
                     </div>
                 </div>
 
-                <!-- Opciones dinámicas para GEL -->
-                <div id="gelOptions" class="battery-options-container" style="display: none;">
-                    <label class="options-label">Batería de gel 12V - Seleccione Capacidad</label>
-                    <div class="options-grid">
-                        <div class="option-item" data-value="100" data-voltage="12">100Ah</div>
-                        <div class="option-item" data-value="150" data-voltage="12">150Ah</div>
-                        <div class="option-item" data-value="200" data-voltage="12">200Ah</div>
-                        <div class="option-item" data-value="250" data-voltage="12">250Ah</div>
-                    </div>
-                </div>
 
-                <!-- Opciones dinámicas para LITIO -->
-                <div id="litioOptions" class="battery-options-container" style="display: none;">
-                    <label class="options-label">Litio - Seleccione Voltaje</label>
-                    <div class="options-grid voltage-grid">
-                        <div class="option-item voltage-item" data-voltage="12">12V</div>
-                        <div class="option-item voltage-item" data-voltage="24">24V</div>
-                        <div class="option-item voltage-item" data-voltage="48">48V</div>
-                    </div>
-                    
-                    <div id="litioCapacities" style="margin-top: 1rem; display: none;">
-                        <label class="options-label">Seleccione Capacidad</label>
-                        <div id="litioCapGrid" class="options-grid">
-                            <!-- Injected dynamically -->
-                        </div>
-                    </div>
-                </div>
 
                 <div class="grid" style="margin-top: 1.5rem;">
                     <div class="input-group">
@@ -156,62 +130,116 @@
                         <input type="number" id="panelIsc" value="13.98" step="0.01" min="0.01"
                                title="Corriente de Cortocircuito. Aparece en el datasheet del panel.">
                     </div>
-                    <div class="input-group" style="margin-bottom: 0; display: none;">
-                        <label>Batería Unit.<span class="label-unit">(Ah)</span></label>
-                        <input type="number" id="batteryUnitAh" value="100" min="1">
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label>Estándar de Tensión (Auto)</label>
+                        <div class="voltage-selection-display" style="display: flex; gap: 5px;">
+                            <div class="voltage-badge" id="v12_auto" style="padding: 0.5rem; font-size: 0.8rem;">12V</div>
+                            <div class="voltage-badge" id="v24_auto" style="padding: 0.5rem; font-size: 0.8rem;">24V</div>
+                            <div class="voltage-badge" id="v48_auto" style="padding: 0.5rem; font-size: 0.8rem;">48V</div>
+                        </div>
                     </div>
                 </div>
-                <button id="btnCalculate" style="background: var(--accent); color: white; margin-top: 1.5rem;">
-                    <i class="fas fa-calculator"></i> REALIZAR CÁLCULO
-                </button>
             </section>
 
-            <!-- Results Section -->
-            <div id="results" class="animate-fade" style="display: none; animation-delay: 0.4s;">
+            <!-- Step 5: Selección de Batería -->
+            <section class="card animate-fade" style="animation-delay: 0.4s;">
+                <h2>5. Selección de Batería</h2>
+                <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem;">
+                    <i class="fas fa-info-circle"></i> Seleccione la capacidad unitaria de la batería para el sistema.
+                </p>
+
+
+
+                <!-- Opciones dinámicas para GEL (se muestran según selección en paso 1) -->
+                <div id="gelOptions" class="battery-options-container" style="display: none; border-style: solid; background: rgba(59, 130, 246, 0.05);">
+                    <label class="options-label">Batería de gel 12V - Seleccione Capacidad</label>
+                    <div class="options-grid">
+                        <div class="option-item" data-value="100" data-voltage="12">100Ah</div>
+                        <div class="option-item" data-value="150" data-voltage="12">150Ah</div>
+                        <div class="option-item" data-value="200" data-voltage="12">200Ah</div>
+                        <div class="option-item" data-value="250" data-voltage="12">250Ah</div>
+                    </div>
+                </div>
+
+                <!-- Opciones dinámicas para LITIO -->
+                <div id="litioOptions" class="battery-options-container" style="display: none; border-style: solid; background: rgba(239, 68, 68, 0.05);">
+                    <label class="options-label">Litio - Seleccione Capacidad</label>
+                    <div class="options-grid">
+                        <div class="option-item litio-cap-item" data-value="100">100Ah</div>
+                        <div class="option-item litio-cap-item" data-value="200">200Ah</div>
+                        <div class="option-item litio-cap-item" data-value="300">300Ah</div>
+                    </div>
+                </div>
+            </section>
+
+            <div style="text-align: center; margin: 3rem 0;">
+                <button id="btnCalculate" style="background: var(--accent); color: white; width: auto; min-width: 300px; font-size: 1.2rem; padding: 1.2rem 3rem;">
+                    <i class="fas fa-calculator"></i> REALIZAR CÁLCULO DEL SISTEMA
+                </button>
+            </div>
+
+            <!-- Step 6: Results Section -->
+            <div id="results" class="animate-fade" style="display: none; animation-delay: 0.5s;">
                 <section class="card" style="border: 2px solid var(--accent); padding: 2.5rem;">
                     <h2 style="color: var(--accent); margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
-                        ✅ Dimensionamiento Sugerido
+                        ✅ 6. Dimensionamiento Sugerido
                     </h2>
                     
                     <div class="grid" style="gap: 2rem;">
+                        <!-- Panel Sugerido -->
                         <div>
                             <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-base);">
-                                <i class="fas fa-bolt" style="color: #ffca28;"></i> Consumo
-                            </h3>
-                            <div class="result-row"><span>Carga Diaria:</span> <span class="result-value" id="resSubWh">0 Wh</span></div>
-                            <div class="result-row"><span>Total (Seguridad):</span> <span class="result-value" id="resTotalWh">0 Wh</span></div>
-                        </div>
-                        <div>
-                            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-base);">
-                                <i class="fas fa-solar-panel" style="color: #4fc3f7;"></i> Campo Solar
+                                <i class="fas fa-solar-panel" style="color: #4fc3f7;"></i> Panel Sugerido
                             </h3>
                             <div class="result-row"><span>Potencia Requerida:</span> <span class="result-value" id="resReqWp">0 Wp</span></div>
                             <div class="result-row"><span>Cantidad Paneles:</span> <span class="result-value" id="resNumPanels">0</span></div>
-                            <div class="result-row" id="rowPanelStrings"><span>Config. Strings:</span> <span class="result-value" id="resPanelStrings">—</span></div>
                         </div>
+
+                        <!-- Características de la batería -->
                         <div>
                             <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-base);">
-                                <i class="fas fa-car-battery" style="color: #ef5350;"></i> Almacenamiento
+                                <i class="fas fa-car-battery" style="color: #ef5350;"></i> Características de la batería
                             </h3>
+                            <div class="voltage-selection-display" style="display: flex; gap: 10px; margin-bottom: 1rem;">
+                                <div class="voltage-badge" id="v12">12V</div>
+                                <div class="voltage-badge" id="v24">24V</div>
+                                <div class="voltage-badge" id="v48">48V</div>
+                            </div>
                             <div class="result-row"><span>Tensión Sistema:</span> <span class="result-value" id="resVoltage">0 V</span></div>
                             <div class="result-row"><span>Distribución:</span> <span class="result-value" id="resBatConfig">0 Series x 0 Paralelos</span></div>
                             <div class="result-row"><span>Total Baterías:</span> <span class="result-value" id="resNumBat">0</span></div>
+                            <div class="result-row"><span>Corriente de la batería:</span> <span class="result-value" id="resBatCurrent">0 A</span></div>
                         </div>
+
+                        <!-- Controlador Sugerido -->
                         <div>
                             <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-base);">
-                                <i class="fas fa-plug" style="color: #66bb6a;"></i> Inversor / MPPT
+                                <i class="fas fa-microchip" style="color: #66bb6a;"></i> Controlador Sugerido
                             </h3>
-                            <div class="result-row"><span>Inversor Sugerido:</span> <span class="result-value" id="resInvPower">0 W</span></div>
-                            <div class="result-row"><span>Controlador MPPT:</span> <span class="result-value" id="resMPPT">0 A</span></div>
-                            <div class="result-row" id="rowMPPTVoltage"><span>Voltaje Máx. Entrada:</span> <span class="result-value" id="resMPPTVoltage">—</span></div>
+                            <div class="result-row"><span>Tecnología:</span> <span class="result-value" id="resCtrlTech">MPPT</span></div>
+                            <div class="result-row"><span>Estándar de Tensión:</span> <span class="result-value" id="resCtrlVoltage">0 V</span></div>
+                            <div class="result-row"><span>Corriente (30% cap.):</span> <span class="result-value" id="resCtrlAmps">0 A</span></div>
+                            <div class="result-row"><span>Capacidad de potencia:</span> <span class="result-value" id="resCtrlPower">0 W</span></div>
+                        </div>
+
+                        <!-- Inversor Sugerido -->
+                        <div>
+                            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-base);">
+                                <i class="fas fa-plug" style="color: #ffca28;"></i> Inversor Sugerido
+                            </h3>
+                            <div class="result-row"><span>Tecnología:</span> <span class="result-value" id="resInvTech">Onda Pura</span></div>
+                            <div class="result-row"><span>Estándar de Tensión:</span> <span class="result-value" id="resInvVoltage">0 V</span></div>
+                            <div class="result-row"><span>Capacidad en vatios:</span> <span class="result-value" id="resInvPowerWatts">0 W</span></div>
                         </div>
                     </div>
 
-                    <!-- Voltage Guide Section (From Excel 3) -->
-                    <div id="voltageGuide" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px dashed rgba(255,255,255,0.2);">
-                        <h4 style="margin-bottom: 1rem;"><i class="fas fa-info-circle"></i> Referencia de Voltaje (SOC)</h4>
-                        <div id="socTableContainer" class="grid" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px;">
-                            <!-- SOC items will be injected here -->
+                    <div style="margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
+                        <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-base);">
+                            <i class="fas fa-bolt" style="color: #ffca28;"></i> Resumen de Consumo
+                        </h3>
+                        <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="result-row"><span>Carga Diaria:</span> <span class="result-value" id="resSubWh">0 Wh</span></div>
+                            <div class="result-row"><span>Total con Seguridad:</span> <span class="result-value" id="resTotalWh">0 Wh</span></div>
                         </div>
                     </div>
                 </section>
