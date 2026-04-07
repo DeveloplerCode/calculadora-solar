@@ -222,7 +222,7 @@
                             <div class="result-row"><span>Tecnología:</span> <span class="result-value" id="resCtrlTech">MPPT</span></div>
                             <div class="result-row"><span>Estándar de Tensión:</span> <span class="result-value" id="resCtrlVoltage">0 V</span></div>
                             <div class="result-row"><span>Corriente (30% cap.):</span> <span class="result-value" id="resCtrlAmps">0 A</span></div>
-                            <div class="result-row"><span>Capacidad de potencia:</span> <span class="result-value" id="resCtrlPower">0 W</span></div>
+                            <div class="result-row"><span>Capacidad mínima de potencia en paneles (pv):</span> <span class="result-value" id="resCtrlPower">0 W</span></div>
                         </div>
 
                         <!-- Inversor Sugerido -->
@@ -247,7 +247,84 @@
                     </div>
                 </section>
             </div>
+
+            <!-- Step 7: Diseño de circuito de paneles -->
+            <div id="step7" class="animate-fade" style="display: none; transition-delay: 0.1s;">
+                <section class="card" style="border: 1px solid var(--secondary); margin-top: 2rem;">
+                    <h2>7. Diseño de circuito de paneles</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        <i class="fas fa-info-circle"></i> Ingresa los datos del controlador para calcular su capacidad máxima y recomendación de conexión.
+                    </p>
+                    
+                    <!-- Datos fijos sugeridos -->
+                    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; background: rgba(59, 130, 246, 0.05); padding: 1rem; border-radius: 12px;">
+                        <div class="result-row" style="flex-direction: column; align-items: flex-start;">
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Tecnología sugerida</span>
+                            <span class="result-value" id="resCtrlTechStep7">-</span>
+                        </div>
+                        <div class="result-row" style="flex-direction: column; align-items: flex-start;">
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Estándar de Tensión sugerido</span>
+                            <span class="result-value" id="resCtrlVoltageStep7">-</span>
+                        </div>
+                        <div class="result-row" style="flex-direction: column; align-items: flex-start;">
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Corriente sugerida (Potencia)</span>
+                            <span class="result-value" id="resCtrlPowerStep7">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Entradas de datos del controlador -->
+                    <div class="grid">
+                        <div class="input-group">
+                            <label>Voc Max PV <span class="label-unit">(V)</span></label>
+                            <input type="number" id="ctrlVocMax" placeholder="Ej: 150">
+                        </div>
+                        <div class="input-group">
+                            <label>Corriente Max PV <span class="label-unit">(A)</span></label>
+                            <input type="number" id="ctrlCurrentMax" placeholder="Ej: 50">
+                        </div>
+                        <div class="input-group">
+                            <label>Potencia Max PV <span class="label-unit">(W)</span></label>
+                            <input type="number" id="ctrlPowerMax" placeholder="Ej: 5000">
+                        </div>
+                        <div class="input-group">
+                            <label>Corriente Max BAT <span class="label-unit">(A)</span></label>
+                            <input type="number" id="ctrlBatCurrentMax" placeholder="Ej: 60">
+                        </div>
+                    </div>
+
+                    <button id="btnCalculateCircuit" class="secondary" style="margin-top: 1rem; width: 100%; font-size: 1.2rem; padding: 1.2rem;">
+                        <i class="fas fa-microchip"></i> CALCULAR CAPACIDAD CONTROLADOR
+                    </button>
+                </section>
+            </div>
+
+            <!-- Step 8: Capacidad max controlador -->
+            <div id="step8" class="animate-fade" style="display: none; transition-delay: 0.2s;">
+                <section class="card" style="border: 1px solid var(--accent); background: rgba(16, 185, 129, 0.02);">
+                    <h2 style="color: var(--accent); margin-bottom: 1.5rem;">8. Capacidad max controlador</h2>
+                    
+                    <div class="grid" style="gap: 1.5rem;">
+                        <div>
+                            <div class="result-row"><span>Cant. máx potencia:</span> <span class="result-value" id="resMaxPowerQty">0</span></div>
+                            <div class="result-row"><span>Series Máx:</span> <span class="result-value" id="resMaxSeries">0</span></div>
+                            <div class="result-row"><span>Paralelos máx:</span> <span class="result-value" id="resMaxParallel">0</span></div>
+                            <div class="result-row"><span>Programación corriente máx:</span> <span class="result-value" id="resProgCurrent">0 A</span></div>
+                        </div>
+                        
+                        <!-- Recommendation Box -->
+                        <div id="connectionRecommendation" class="tip-box" style="background: rgba(59, 130, 246, 0.1); border: 1px solid var(--secondary); padding: 1.2rem; border-radius: 12px;">
+                            <h4 style="margin-bottom: 0.5rem; color: var(--secondary); display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-project-diagram"></i> Recomendación de Conexión
+                            </h4>
+                            <p id="recommendationText" style="font-size: 0.95rem; line-height: 1.5;">
+                                Ingrese los datos del controlador para obtener la recomendación de conexión de sus paneles.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </main>
+
  
         <footer style="text-align: center; padding: 2rem; color: var(--text-muted);">
             <p>&copy; 2026 Solar Pro Calculator. amezadeveloper@gmail.com</p>
