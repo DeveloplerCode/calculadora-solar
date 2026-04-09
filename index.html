@@ -212,6 +212,7 @@
                             <div class="result-row"><span>Total de Baterías:</span> <span class="result-value" id="resNumBat">0</span></div>
                             <div id="resBatTip" style="margin-top: 0.5rem;"></div>
                             <div class="result-row"><span>Capacidad Ah Requerida:</span> <span class="result-value" id="resBatCurrent">0 Ah</span></div>
+                            <div class="result-row"><span>Capacidad entregada:</span> <span class="result-value" id="resBatDelivered">0 Ah</span></div>
                         </div>
 
                         <!-- Controlador Sugerido -->
@@ -270,6 +271,10 @@
                             <span style="font-size: 0.8rem; color: var(--text-muted);">Corriente (30% cap.)</span>
                             <span class="result-value" id="resCtrlAmpsStep7">-</span>
                         </div>
+                        <div class="result-row" style="flex-direction: column; align-items: flex-start;">
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Capacidad mínima en potencia en paneles</span>
+                            <span class="result-value" id="resCtrlPowerStep7">-</span>
+                        </div>
                     </div>
 
                     <!-- Entradas de datos del controlador -->
@@ -283,12 +288,12 @@
                             <input type="number" id="ctrlCurrentMax" placeholder="Ej: 50">
                         </div>
                         <div class="input-group">
-                            <label>Potencia Max PV <span class="label-unit">(W)</span></label>
+                            <label id="lblCtrlPowerMax">Potencia Max PV <span class="label-unit">(W)</span></label>
                             <input type="number" id="ctrlPowerMax" placeholder="Ej: 5000">
                         </div>
                         <div class="input-group">
                             <label>Corriente Max BAT <span class="label-unit">(A)</span></label>
-                            <input type="number" id="ctrlBatCurrentMax" placeholder="Ej: 60">
+                            <input type="number" id="ctrlBatCurrentMax" placeholder="Ej: 60" readonly>
                         </div>
                     </div>
 
@@ -305,7 +310,7 @@
                     
                     <div class="grid" style="gap: 1.5rem;">
                         <div>
-                            <div class="result-row"><span>Cant. máx potencia:</span> <span class="result-value" id="resMaxPowerQty">0</span></div>
+                            <div class="result-row"><span>Cant. máx paneles:</span> <span class="result-value" id="resMaxPowerQty">0</span></div>
                             <div class="result-row"><span>Series Máx:</span> <span class="result-value" id="resMaxSeries">0</span></div>
                             <div class="result-row"><span>Paralelos máx:</span> <span class="result-value" id="resMaxParallel">0</span></div>
                             <div class="result-row"><span>Programación corriente máx:</span> <span class="result-value" id="resProgCurrent">0 A</span></div>

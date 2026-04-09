@@ -319,6 +319,7 @@ button.secondary {
 .result-value {
   font-weight: 700;
   color: var(--accent);
+  white-space: nowrap;
 }
 
 @keyframes fadeIn {
@@ -417,4 +418,12 @@ button.secondary {
   opacity: 1;
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
   transform: scale(1.02);
+}
+
+.tip-box {
+  background: rgba(102, 187, 106, 0.1);
+  border: 1px dashed #66bb6a;
+  padding: 0.8rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
 }
