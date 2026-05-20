@@ -46,36 +46,50 @@
             <!-- Step 2: Ubicación y HSP -->
             <section class="card animate-fade" style="animation-delay: 0.1s;">
                 <h2>2. Radiación Solar (HSP)</h2>
-                <p style="color: var(--text-muted); margin-bottom: 1rem;">Obtén las Horas Solares Pico para tu ubicación.</p>
-                <div class="grid">
-                    <div class="input-group">
-                        <label>Latitud</label>
-                        <input type="number" id="latitude" value="0" step="0.01">
-                    </div>
-                    <div class="input-group">
-                        <label>Longitud</label>
-                        <input type="number" id="longitude" value="0" step="0.01">
-                    </div>
-                </div>
-                <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
-                    <button type="button" id="btnCalculateHSPManual" class="secondary" style="flex: 1; min-width: 200px;">
-                        <i class="fas fa-calculator"></i> Calcular HSP Manual
-                    </button>
-                    <button type="button" id="btnGetLocation" class="secondary" style="flex: 1; min-width: 200px;">
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Elige el método para definir las Horas Solares Pico (HSP).</p>
+                
+                <div class="tabs-control">
+                    <button type="button" class="tab-btn active" id="tabGPS">
                         <i class="fas fa-map-marker-alt"></i> Auto Detectar (GPS)
                     </button>
+                    <button type="button" class="tab-btn" id="tabManual">
+                        <i class="fas fa-edit"></i> Ingreso Manual
+                    </button>
                 </div>
-                <div class="gps-tip">
-                    <div class="gps-tip-icon">
-                        <i class="fas fa-location-arrow"></i>
+
+                <!-- GPS / Coordenadas Panel -->
+                <div id="panelGPS" class="method-panel">
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                        <button type="button" id="btnGetLocation" class="secondary" style="width: 100%;">
+                            <i class="fas fa-map-marker-alt"></i> Obtener Ubicación y Calcular HSP
+                        </button>
                     </div>
-                    <div class="gps-tip-text">
-                        <span class="gps-tip-title">Requerido: Permiso de ubicación</span>
-                        El navegador solicitará acceso a tu posición. <strong>Acéptalo</strong> para autocompletar 
-                        las coordenadas y calcular el HSP preciso de tu zona.
+                    <div class="gps-tip">
+                        <div class="gps-tip-icon">
+                            <i class="fas fa-location-arrow"></i>
+                        </div>
+                        <div class="gps-tip-text">
+                            <span class="gps-tip-title">Requerido: Permiso de ubicación</span>
+                            El navegador solicitará acceso a tu posición. <strong>Acéptalo</strong> para detectar
+                            tus coordenadas y calcular automáticamente el HSP preciso de tu zona desde la NASA.
+                        </div>
                     </div>
                 </div>
-                <div id="hspInfo" style="margin-top: 1rem; text-align: center; font-weight: 600;"></div>
+
+                <!-- Manual HSP Panel -->
+                <div id="panelManual" class="method-panel" style="display: none;">
+                    <div class="grid">
+                        <div class="input-group">
+                            <label>Horas Solares Pico (HSP) <span class="label-unit">(h/día)</span></label>
+                            <input type="number" id="hspManualInput" value="4.2" step="0.1" min="0.1" max="24" placeholder="Ej: 4.5">
+                        </div>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem; line-height: 1.4;">
+                        <i class="fas fa-info-circle" style="color: var(--secondary);"></i> Ingresa el promedio diario de HSP de tu zona. Por ejemplo: 4.2, 5.3, etc.
+                    </p>
+                </div>
+
+                <div id="hspInfo" style="margin-top: 1.5rem; text-align: center; font-weight: 600;"></div>
             </section>
 
             <!-- Step 3: Aparatos -->
@@ -111,6 +125,18 @@
 
                 <div id="applianceList" style="margin-top: 1.5rem;">
                     <!-- List items will be injected here -->
+                </div>
+
+                <!-- Resumen de consumo del paso 3 -->
+                <div id="applianceSummary" style="display: none; margin-top: 1.5rem; justify-content: space-between; padding: 1.2rem; background: rgba(59, 130, 246, 0.05); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2); animation: fadeIn 0.4s ease;">
+                    <div>
+                        <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">Consumo Total (Sin Factor)</span>
+                        <strong style="font-size: 1.2rem; color: var(--text-main);"><span id="sumSubTotalWh">0</span> Wh/día</strong>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">Total + Factor de Seguridad</span>
+                        <strong style="font-size: 1.2rem; color: var(--accent);"><span id="sumTotalWh">0</span> Wh/día</strong>
+                    </div>
                 </div>
             </section>
 
